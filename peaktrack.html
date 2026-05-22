@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PEAK.TRACK — Seu treino, seus recordes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="peaktrack.css" />
+
+ 
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ── Barra lateral ── -->
+  <aside class="sidebar">
+    <div class="logo">PEAK<span>.</span></div>
+    <nav class="nav">
+      <button class="nav-item active" onclick="showPanel('geral', this)">
+        <i class="ti ti-layout-dashboard"></i>
+        <span>Painel</span>
+      </button>
+      <div class="nav-label">Modalidades</div>
+      <button class="nav-item" onclick="showPanel('corrida', this)">
+        <i class="ti ti-run"></i>
+        <span>Corrida</span>
+      </button>
+      <button class="nav-item" onclick="showPanel('musculacao', this)">
+        <i class="ti ti-barbell"></i>
+        <span>Musculação</span>
+      </button>
+      <button class="nav-item" onclick="showPanel('bike', this)">
+        <i class="ti ti-bike"></i>
+        <span>Bike</span>
+      </button>
+      <button class="nav-item" onclick="showPanel('natacao', this)">
+        <i class="ti ti-ripple"></i>
+        <span>Natação</span>
+      </button>
+      <div class="nav-label">Outros</div>
+      <button class="nav-item">
+        <i class="ti ti-chart-line"></i>
+        <span>Progresso</span>
+      </button>
+      <button class="nav-item">
+        <i class="ti ti-calendar-event"></i>
+        <span>Calendário</span>
+      </button>
+      <button class="nav-item">
+        <i class="ti ti-settings"></i>
+        <span>Config.</span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-avatar">J</div>
+      <div class="user-info">
+        <div class="user-name">João Silva</div>
+        <div class="user-plan">Plano Pro</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main content ── -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="page-title" id="page-title">Painel geral</div>
+      <div class="topbar-right">
+        <button class="btn btn-ghost" onclick="openModal()">
+          <i class="ti ti-plus"></i> Registrar
+        </button>
+        <button class="btn btn-primary" onclick="openModal()">
+          <i class="ti ti-activity-heartbeat"></i> Novo treino
+        </button>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" onclick="switchTab('geral', this)">
+        <i class="ti ti-layout-dashboard"></i> Geral
+      </button>
+      <button class="tab-btn" onclick="switchTab('corrida', this)">
+        <i class="ti ti-run"></i> Corrida
+      </button>
+      <button class="tab-btn" onclick="switchTab('musculacao', this)">
+        <i class="ti ti-barbell"></i> Musculação
+      </button>
+      <button class="tab-btn" onclick="switchTab('bike', this)">
+        <i class="ti ti-bike"></i> Bike
+      </button>
+      <button class="tab-btn" onclick="switchTab('natacao', this)">
+        <i class="ti ti-ripple"></i> Natação
+      </button>
+    </div>
+
+    <!-- Content area -->
+    <div class="content">
+
+      <!-- ── Panel: Geral ── -->
+      <div class="panel active" id="panel-geral">
+
+        <div class="section-label">Semana atual</div>
+        <div class="stats-row">
+          <div class="stat-card">
+            <i class="ti ti-activity stat-icon"></i>
+            <div class="stat-num">4</div>
+            <div class="stat-lbl">Treinos realizados</div>
+            <div class="stat-diff"><i class="ti ti-trending-up"></i> +1 vs semana ant.</div>
+          </div>
+          <div class="stat-card">
+            <i class="ti ti-road stat-icon"></i>
+            <div class="stat-num">28,4</div>
+            <div class="stat-lbl">Km rodados</div>
+            <div class="stat-diff"><i class="ti ti-trending-up"></i> +4,2 km</div>
+          </div>
+          <div class="stat-card">
+            <i class="ti ti-clock stat-icon"></i>
+            <div class="stat-num">3h12</div>
+            <div class="stat-lbl">Tempo ativo</div>
+            <div class="stat-diff neg"><i class="ti ti-trending-down"></i> -18 min</div>
+          </div>
+          <div class="stat-card">
+            <i class="ti ti-flame stat-icon"></i>
+            <div class="stat-num">1.840</div>
+            <div class="stat-lbl">Calorias queimadas</div>
+            <div class="stat-diff"><i class="ti ti-trending-up"></i> +210 kcal</div>
+          </div>
+        </div>
+
+        <!-- Volume chart -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Volume de treinos — últimos 7 dias</div>
+              <div class="chart-sub">Tempo de atividade em minutos por sessão</div>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Corrida</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> Musculação</div>
+            </div>
+          </div>
+          <div class="bar-chart" id="barChart"></div>
+        </div>
+
+        <div class="section-label">Recordes pessoais</div>
+        <div class="pr-grid" id="pr-grid-all"></div>
+
+        <div class="section-label">Últimas atividades</div>
+        <div class="activity-list" id="activity-list-all"></div>
+      </div>
+
+      <!-- ── Panel: Corrida ── -->
+      <div class="panel" id="panel-corrida">
+        <div class="section-label">Recordes de corrida</div>
+        <div class="pr-grid" id="pr-grid-corrida"></div>
+
+        <div class="section-label">Histórico de corridas</div>
+        <div class="activity-list" id="activity-list-corrida"></div>
+      </div>
+
+      <!-- ── Panel: Musculação ── -->
+      <div class="panel" id="panel-musculacao">
+        <div class="section-label">Recordes de musculação</div>
+        <div class="pr-grid" id="pr-grid-musculacao"></div>
+
+        <div class="section-label">Últimas sessões</div>
+        <div class="activity-list" id="activity-list-musculacao"></div>
+      </div>
+
+      <!-- ── Panel: Bike ── -->
+      <div class="panel" id="panel-bike">
+        <div class="section-label">Recordes de bike</div>
+        <div class="pr-grid" id="pr-grid-bike"></div>
+
+        <div class="section-label">Histórico de pedais</div>
+        <div class="activity-list" id="activity-list-bike"></div>
+      </div>
+
+      <!-- ── Panel: Natação ── -->
+      <div class="panel" id="panel-natacao">
+        <div class="section-label">Recordes de natação</div>
+        <div class="pr-grid" id="pr-grid-natacao"></div>
+
+        <div class="section-label">Histórico de nados</div>
+        <div class="activity-list" id="activity-list-natacao"></div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<!-- ── Modal: Novo treino ── -->
+<div class="modal-overlay" id="modal" onclick="handleOverlay(event)">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-title">Registrar treino</div>
+      <button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>
+    </div>
+
+    <div class="type-picker">
+      <button class="type-btn" id="tb-run"  onclick="selType('run')">
+        <i class="ti ti-run"></i> Corrida
+      </button>
+      <button class="type-btn" id="tb-lift" onclick="selType('lift')">
+        <i class="ti ti-barbell"></i> Musculação
+      </button>
+      <button class="type-btn" id="tb-bike" onclick="selType('bike')">
+        <i class="ti ti-bike"></i> Bike
+      </button>
+      <button class="type-btn" id="tb-swim" onclick="selType('swim')">
+        <i class="ti ti-ripple"></i> Natação
+      </button>
+    </div>
+
+    <!-- Run fields -->
+    <div class="form-section" id="fs-run">
+      <div class="form-row">
+        <div>
+          <label class="form-label">Distância (km)</label>
+          <input type="number" placeholder="8.5" step="0.1" min="0" />
+        </div>
+        <div>
+          <label class="form-label">Tempo total</label>
+          <input type="text" placeholder="45:00" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Pace médio (min/km)</label>
+          <input type="text" placeholder="5'18&quot;" />
+        </div>
+        <div>
+          <label class="form-label">FC média (bpm)</label>
+          <input type="number" placeholder="158" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Elevação (m)</label>
+          <input type="number" placeholder="120" />
+        </div>
+        <div>
+          <label class="form-label">Calorias (kcal)</label>
+          <input type="number" placeholder="480" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Lift fields -->
+    <div class="form-section" id="fs-lift">
+      <div class="form-full">
+        <label class="form-label">Tipo de treino</label>
+        <select>
+          <option>Upper A — Peito + Ombro</option>
+          <option>Upper B — Costas + Bíceps</option>
+          <option>Lower — Agachamento foco</option>
+          <option>Lower — Terra foco</option>
+          <option>Full Body</option>
+          <option>Outro</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Exercício principal</label>
+          <select>
+            <option>Supino reto</option>
+            <option>Agachamento livre</option>
+            <option>Levantamento terra</option>
+            <option>Desenvolvimento</option>
+            <option>Puxada</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Carga máxima (kg)</label>
+          <input type="number" placeholder="100" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Séries × Reps</label>
+          <input type="text" placeholder="4 × 8" />
+        </div>
+        <div>
+          <label class="form-label">Volume total (kg)</label>
+          <input type="number" placeholder="8400" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Bike fields -->
+    <div class="form-section" id="fs-bike">
+      <div class="form-row">
+        <div>
+          <label class="form-label">Distância (km)</label>
+          <input type="number" placeholder="30" step="0.1" />
+        </div>
+        <div>
+          <label class="form-label">Tempo total</label>
+          <input type="text" placeholder="1:10:00" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Velocidade média (km/h)</label>
+          <input type="number" placeholder="25.4" step="0.1" />
+        </div>
+        <div>
+          <label class="form-label">Elevação (m)</label>
+          <input type="number" placeholder="320" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Swim fields -->
+    <div class="form-section" id="fs-swim">
+      <div class="form-row">
+        <div>
+          <label class="form-label">Distância (m)</label>
+          <input type="number" placeholder="2000" />
+        </div>
+        <div>
+          <label class="form-label">Tempo total</label>
+          <input type="text" placeholder="38:00" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Pace / 100m</label>
+          <input type="text" placeholder="1'54&quot;" />
+        </div>
+        <div>
+          <label class="form-label">Braçadas / volta</label>
+          <input type="number" placeholder="32" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Common -->
+    <div class="form-section" id="fs-common">
+      <div class="divider"></div>
+      <div class="form-row">
+        <div>
+          <label class="form-label">Data</label>
+          <input type="text" id="input-date" placeholder="21/05/2025" />
+        </div>
+        <div>
+          <label class="form-label">Sensação geral</label>
+          <select>
+            <option>😴 Fraco</option>
+            <option selected>😐 Normal</option>
+            <option>💪 Bom</option>
+            <option>🔥 Excelente</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-full">
+        <label class="form-label">Notas</label>
+        <textarea placeholder="Como foi o treino? Algo que chamou atenção..."></textarea>
+      </div>
+    </div>
+
+    <button class="btn-save" id="btn-save" onclick="saveWorkout()">
+      <i class="ti ti-device-floppy"></i> Salvar treino
+    </button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="ti ti-circle-check-filled"></i>
+  <span id="toast-msg">Treino salvo com sucesso!</span>
+</div>
+
+<script src="peaktrack.js"></script>
+</body>
+</html>
