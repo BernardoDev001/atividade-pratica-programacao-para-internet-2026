@@ -10,8 +10,6 @@
     { type:'lift', icon:'ti-trending-up',      tag:'VOLUME',      value:'18.400',  label:'Maior volume sessão (kg)', date:'10 mar 2025' },
     { type:'bike', icon:'ti-bike',             tag:'DISTÂNCIA',   value:'47,2 km', label:'Maior distância',          date:'19 mai 2025' },
     { type:'bike', icon:'ti-bolt',             tag:'VELOCIDADE',  value:'34,1 km/h',label:'Velocidade máx.',          date:'19 mai 2025' },
-    { type:'swim', icon:'ti-ripple',           tag:'PACE',        value:"1'42\"",  label:'Pace 100 m',               date:'1 mai 2025'  },
-    { type:'swim', icon:'ti-road',             tag:'DISTÂNCIA',   value:'3.200 m', label:'Maior distância',          date:'28 abr 2025' },
   ];
 
   const Activities = [
@@ -20,7 +18,6 @@
     { type:'lift', icon:'ai-lift', name:'Lower — Agachamento foco', meta:'18 mai · 1h 05 min',          primary:'12.600', secondary:'kg volume', pr: false },
     { type:'bike', icon:'ai-bike', name:'Pedal longo',              meta:'19 mai · 1h 44 min',          primary:'47,2 km', secondary:'27,1 km/h', pr: true },
     { type:'run',  icon:'ai-run',  name:'Fartlek 5km',              meta:'17 mai · 28 min',             primary:'5,0 km', secondary:'5\'38"/km', pr: false },
-    { type:'swim', icon:'ai-swim', name:'Nado aeróbico',            meta:'16 mai · 50 min',             primary:'2.400 m', secondary:"1'59\"/100m", pr: false },
   ];
 
   const barData = [
@@ -35,11 +32,11 @@
 
   /* ─── Render helpers ────────────────────────────── */
   function colorClass(type) {
-    return { run:'c-run', lift:'c-lift', bike:'c-bike', swim:'c-swim' }[type] || 'c-run';
+    return { run:'c-run', lift:'c-lift', bike:'c-bike' }[type] || 'c-run';
   }
 
   function iconClass(type) {
-    return { run:'ti-run', lift:'ti-barbell', bike:'ti-bike', swim:'ti-ripple' }[type];
+    return { run:'ti-run', lift:'ti-barbell', bike:'ti-bike' }[type];
   }
 
   function makePRCard(pr) {
@@ -111,12 +108,10 @@
   renderGrid('pr-grid-corrida', ['run']);
   renderGrid('pr-grid-musculacao', ['lift']);
   renderGrid('pr-grid-bike', ['bike']);
-  renderGrid('pr-grid-natacao', ['swim']);
   renderList('activity-list-all', 'all');
   renderList('activity-list-corrida', ['run']);
   renderList('activity-list-musculacao', ['lift']);
   renderList('activity-list-bike', ['bike']);
-  renderList('activity-list-natacao', ['swim']);
   renderBarChart();
 
   // Set today's date
@@ -131,7 +126,6 @@
     corrida: 'Corrida',
     musculacao: 'Musculação',
     bike: 'Bike',
-    natacao: 'Natação',
   };
 
   function showPanel(name, navBtn) {
@@ -143,7 +137,7 @@
 
     // sync tabs
     document.querySelectorAll('.tab-btn').forEach((t, i) => {
-      const panels = ['geral','corrida','musculacao','bike','natacao'];
+      const panels = ['geral','corrida','musculacao','bike'];
       t.classList.toggle('active', panels[i] === name);
     });
   }
@@ -154,7 +148,7 @@
     tabBtn.classList.add('active');
 
     // sync sidebar
-    const sideMap = {geral: 0, corrida: 1, musculacao: 2, bike: 3, natacao: 4};
+    const sideMap = {geral: 0, corrida: 1, musculacao: 2, bike: 3};
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(n => n.classList.remove('active'));
     if (sideMap[name] !== undefined) navItems[sideMap[name]].classList.add('active');
@@ -181,7 +175,7 @@
 
   function selType(t) {
     curType = t;
-    ['run','lift','bike','swim'].forEach(x => {
+    ['run','lift','bike'].forEach(x => {
       document.getElementById('tb-' + x).className =
         'type-btn' + (x === t ? ' sel-' + x : '');
       document.getElementById('fs-' + x).style.display = x === t ? 'block' : 'none';
@@ -192,7 +186,7 @@
 
   function resetModal() {
     curType = null;
-    ['run','lift','bike','swim'].forEach(x => {
+    ['run','lift','bike'].forEach(x => {
       document.getElementById('tb-' + x).className = 'type-btn';
       document.getElementById('fs-' + x).style.display = 'none';
     });
@@ -203,7 +197,7 @@
   function saveWorkout() {
     if (!curType) return;
     closeModal();
-    const labels = { run:'corrida', lift:'musculação', bike:'bike', swim:'natação' };
+    const labels = { run:'corrida', lift:'musculação', bike:'bike' };
     showToast(`Treino de ${labels[curType]} salvo! 🎉`);
   }
 
